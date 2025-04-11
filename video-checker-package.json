@@ -1,0 +1,16 @@
+{
+  "name": "form3-video-checker",
+  "version": "1.0.0",
+  "description": "Tool to verify and fix videos in the Form3EOYrevision project",
+  "main": "video-checker.js",
+  "scripts": {
+    "check": "node video-checker.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  }
+}
