@@ -14,6 +14,9 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "appwrite": "^17.0.1",
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
     "firebase": "^10.9.0",
     "framer-motion": "^11.18.2",
     "react": "^18.2.0",
@@ -21,7 +24,8 @@
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "youtube-validate": "^1.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,7 +33,11 @@
     "build": "set \"CI=false\" && react-scripts build",
     "build:netlify": "node netlify-build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "check-videos": "node tools/content-validation/check-videos.js",
+    "check-pdfs": "node tools/content-validation/check-pdfs.js",
+    "generate-solutions": "node tools/content-validation/generate-solutions.js",
+    "validate-all": "node tools/content-validation/validate-all.js"
   },
   "eslintConfig": {
     "extends": [
