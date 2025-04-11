@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Document geometry
+\geometry{a4paper, margin=2.5cm}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Cambridge IGCSE Mathematics}
+\fancyhead[R]{${TOPIC_NAME}}
+\fancyfoot[C]{Page \thepage}
+
+% Define colors
+\definecolor{mainblue}{RGB}{0, 103, 192}
+\definecolor{lighterblue}{RGB}{100, 170, 255}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+% Custom theorem-like environments
+\newtheorem{solution}{Solution}
+\newtheorem{note}{Note}
+
+% Custom commands
+\newcommand{\solutionheading}[1]{\noindent\textbf{\textcolor{mainblue}{#1}}\par}
+\newcommand{\stepheading}[1]{\noindent\textbf{Step #1:}}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    {\Huge\bfseries\textcolor{mainblue}{Solutions}\par}
+    \vspace{1cm}
+    {\LARGE ${TOPIC_NAME}\par}
+    \vspace{0.5cm}
+    {\Large ${SUBTOPIC_NAME}\par}
+    \vspace{2cm}
+    {\large Cambridge IGCSE Mathematics\par}
+    \vspace{1cm}
+    {\includegraphics[width=0.4\textwidth]{/api/placeholder/400/320}\par}
+    \vfill
+    {\large Generated with DeepSeek Reasoner\par}
+    {\large \today\par}
+\end{titlepage}
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Introduction
+\section{Introduction}
+This document contains detailed solutions to the exercises on ${TOPIC_NAME}: ${SUBTOPIC_NAME}. Each solution includes step-by-step working to help you understand the mathematical concepts and techniques used.
+
+% Solutions section
+\section{Solutions}
+
+${SOLUTIONS_CONTENT}
+
+% Tips section
+\section{Tips and Common Mistakes}
+
+\begin{itemize}
+    \item Remember to show all your working in examinations
+    \item Pay attention to units and ensure your final answer has the correct units
+    \item Check your calculations by using alternative methods or estimation
+    \item When solving problems involving angles, draw clear diagrams and label all angles
+    \item For algebraic solutions, check your work by substituting values back into the original equation
+\end{itemize}
+
+% Further practice
+\section{Further Practice}
+
+For additional practice, you can explore these resources:
+\begin{itemize}
+    \item Cambridge IGCSE Mathematics coursebook exercises
+    \item Past examination papers for Cambridge IGCSE Mathematics (0580)
+    \item Online resources such as Khan Academy and Corbett Maths
+\end{itemize}
+
+\end{document}
