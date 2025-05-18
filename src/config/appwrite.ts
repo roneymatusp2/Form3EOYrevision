@@ -1,7 +1,6 @@
 import { Client, Databases, Storage, ID } from 'appwrite';
 
 // Static configuration values
-// Conflito resolvido: as duas versões eram idênticas
 const REQUIRED_ENV_VARS = {
     ENDPOINT: 'https://cloud.appwrite.io/v1',
     PROJECT_ID: '67eff58c0026f452ff3d'
@@ -20,7 +19,7 @@ export const DATABASE_IDS = {
 
 // Bucket IDs with descriptions
 export const BUCKET_IDS = {
-    // Conflito resolvido: as duas versões eram idênticas para MATH_PDFS
+    // Conflito resolvido: as duas versões eram idênticas para MATH_PDFS (este comentário pode ser removido se desejado, pois o conflito original já foi resolvido)
     MATH_PDFS: '67f03c12001381e227aa',    // Storage for PDF files
     MATH_VIDEOS: '67f03c7600242f02fd1a',   // Storage for video content
     MATH_EXTERNAL: '67f03d6f0021c674bd8d'  // Storage for external resources

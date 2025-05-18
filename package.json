@@ -38,7 +38,8 @@
     "check-videos": "node tools/content-validation/check-videos.js",
     "check-pdfs": "node tools/content-validation/check-pdfs.js",
     "generate-solutions": "node tools/content-validation/generate-solutions.js",
-    "validate-all": "node tools/content-validation/validate-all.js"
+    "validate-all": "node tools/content-validation/validate-all.js",
+    "check-resources": "node scripts/resource-checker.js"
   },
   "eslintConfig": {
     "extends": [

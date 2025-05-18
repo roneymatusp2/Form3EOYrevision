@@ -1,0 +1,51 @@
+name: Resource Validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'src/data/**.ts'
+      - 'scripts/resource-checker.js'
+      - '.github/workflows/resource-validation.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  schedule:
+    - cron: '0 4 * * 0'
+
+jobs:
+  validate_resource_links:
+    name: Validate Resource Links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run resource link checker
+        id: check_links
+        run: npm run check-resources
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          NODE_ENV: production
+          FORCE_COLOR: '1'
+
+      - name: Upload broken links report
+        if: failure() || steps.check_links.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: broken-links-report
+          path: broken-links.txt
+          if-no-files-found: ignore
