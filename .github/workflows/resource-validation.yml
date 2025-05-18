@@ -11,10 +11,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - run: npm ci
-      - run: npm run check-resources
+          node-version: 20   # LTS atual
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Run resource validator
+        run: npm run check-resources
         env:
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+
+      - name: Upload report ❌
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: broken-links
+          path: broken-links.txt
