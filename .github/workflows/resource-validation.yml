@@ -1,0 +1,20 @@
+name: Resource Validation
+
+on:
+  workflow_dispatch:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: npm run check-resources
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
