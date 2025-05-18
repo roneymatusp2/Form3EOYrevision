@@ -1,54 +1,93 @@
-require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
+#!/usr/bin/env node
+/* eslint-disable no-console */
+import fs from 'fs';
+import path from 'path';
+import axios from 'axios';
+import dotenv from 'dotenv';
+import pLimit from 'p-limit';           // para limitar concorrência
+import chalk from 'chalk';
 
-const DATA_DIR = path.join(__dirname, '..', 'src', 'data');
+dotenv.config();
+
+const DATA_DIR = path.resolve('src', 'data');
 const FILES = ['videos.ts', 'pdfs.ts', 'externalResources.ts'];
-const URL_REGEX = /https?:\/\/[^'"\s)]+/g;
+const URL_REGEX = /https?:\/\/[^\s'")]+/g;
+const BROKEN = [];
+const limit = pLimit(10);               // máx. 10 requests simultâneas
 
-const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY;
-const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
-
-async function callMistral(url) {
-  if (!MISTRAL_API_KEY) return null;
+const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY ?? '';
+const callMistral = async (url) => {
+  if (!MISTRAL_API_KEY) return '';
   try {
-    const prompt = `Verify that the following resource link is relevant to a mathematics topic and safe for students: ${url}`;
     const resp = await axios.post(
-      MISTRAL_API_URL,
-      { model: 'mistral-small', messages: [{ role: 'user', content: prompt }] },
-      { headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${MISTRAL_API_KEY}` } }
+      'https://api.mistral.ai/v1/chat/completions',
+      {
+        model: 'mistral-small',
+        messages: [
+          { role: 'user',
+            content: `Verify that the following resource link is relevant to a mathematics topic and safe for students: ${url}` }
+        ],
+        temperature: 0.1,
+      },
+      { headers: { Authorization: `Bearer ${MISTRAL_API_KEY}` } },
     );
-    return resp.data.choices[0].message.content;
+    return resp.data.choices[0]?.message?.content ?? '';
   } catch (err) {
-    console.error('Mistral API error', err.message);
-    return null;
+    return `⚠️ Mistral API error: ${err.response?.status ?? err.message}`;
   }
-}
+};
 
-async function checkUrl(url) {
+const checkUrl = async (url) => {
   try {
-    const res = await axios.head(url, { timeout: 10000 });
+    const res = await axios.head(url, { timeout: 10000, maxRedirects: 3 });
     return res.status >= 200 && res.status < 400;
   } catch {
-    return false;
+    // Alguns servidores bloqueiam HEAD; tenta GET com Range mínimo
+    try {
+      const res = await axios.get(url, {
+        timeout: 10000,
+        maxRedirects: 3,
+        headers: { Range: 'bytes=0-0' },
+      });
+      return res.status >= 200 && res.status < 400;
+    } catch {
+      return false;
+    }
   }
-}
+};
 
 (async () => {
+  const tasks = [];
+
   for (const file of FILES) {
     const fp = path.join(DATA_DIR, file);
     if (!fs.existsSync(fp)) continue;
-    const content = fs.readFileSync(fp, 'utf8');
-    const urls = content.match(URL_REGEX) || [];
+
+    const urls = (fs.readFileSync(fp, 'utf8').match(URL_REGEX) || [])
+      .filter((u, i, arr) => arr.indexOf(u) === i);        // remove duplicatas
+
     for (const url of urls) {
-      const ok = await checkUrl(url);
-      if (!ok) {
-        console.error(`Broken link detected in ${file}: ${url}`);
-      } else {
+      tasks.push(limit(async () => {
+        const alive = await checkUrl(url);
+        if (!alive) {
+          BROKEN.push(`${file}: ${url}`);
+          console.log(chalk.red('✗'), `${url}  (${file})`);
+          return;
+        }
+
         const note = await callMistral(url);
-        console.log(`Checked ${url}: ${note || 'no response'}`);
-      }
+        console.log(chalk.green('✓'), url, note ? `→ ${note}` : '');
+      }));
     }
+  }
+
+  await Promise.all(tasks);
+
+  if (BROKEN.length) {
+    fs.writeFileSync('broken-links.txt', BROKEN.join('\n'));
+    console.error('\nBroken links detected:\n', BROKEN.join('\n'));
+    process.exit(1);                                       // força falha do job
+  } else {
+    console.log(chalk.blue('\nAll links healthy!'));
   }
 })();
