@@ -19,8 +19,13 @@ These tools help ensure that all educational content is:
 - Automatically finds and replaces broken or irrelevant videos
 - Generates detailed reports of all changes
 
+### PDF Validation
+- Checks that every PDF link is reachable
+- Extracts a text sample from each PDF
+- Uses DeepSeek Reasoner to confirm the PDF is relevant to its topic
+- Generates a report with any issues found
+
 ### Future Features
-- PDF relevance checking and replacement
 - Automatic generation of missing exercise solutions
 - Content quality assessment
 - Math notation validation
@@ -39,6 +44,7 @@ tools/content-validation/
 ├── config.js            # Configuration settings
 ├── utils.js             # Shared utility functions
 ├── check-videos.js      # Video verification tool
+├── check-pdfs.js        # PDF verification tool
 ├── validate-all.js      # Master script to run all tools
 └── README.md            # This documentation file
 ```
@@ -67,6 +73,12 @@ You can run individual tools or use the master script to run everything:
 npm run check-videos
 ```
 
+#### Check PDFs Only
+
+```bash
+npm run check-pdfs
+```
+
 #### Run All Validation Tools
 
 ```bash
@@ -84,6 +96,13 @@ npm run validate-all
    - If issues are found, it finds a replacement video
    - It updates the `videos.ts` file directly with the new URL
 3. All operations are logged and detailed reports are generated
+
+### PDF Verification Process
+
+1. The tool reads the `pdfs.ts` and `topics.ts` files
+2. Each PDF link is fetched to ensure it responds successfully
+3. A text sample is extracted from the file and analysed with DeepSeek Reasoner
+4. Results are stored in a JSON report for review
 
 ### Batch Processing
 
