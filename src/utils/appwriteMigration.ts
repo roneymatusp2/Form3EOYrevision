@@ -2,14 +2,14 @@ import { AppwriteService } from '../services/appwriteService';
 import topicsData from '../data/topics';
 
 interface MigrationTopic {
-    $id?: string;
+    $id?: string; // Conflito resolvido: ambas as versões eram idênticas
     name: string;
     slug: string;
     subtopics: MigrationSubtopic[];
 }
 
 interface MigrationSubtopic {
-    $id?: string;
+    $id?: string; // Conflito resolvido: ambas as versões eram idênticas
     name: string;
     slug: string;
     resources: MigrationResource[]; // Assumindo que resources podem estar aqui, embora migrateTopics não os use
@@ -41,7 +41,7 @@ export async function migrateTopics(): Promise<MigrationResult> {
     };
 
     try {
-        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
+        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[]; // Conflito resolvido: ambas as versões eram idênticas
         // Migrate topics and their subtopics
         for (const topic of topicsToMigrate) {
             try {
@@ -59,7 +59,7 @@ export async function migrateTopics(): Promise<MigrationResult> {
                             await AppwriteService.createSubtopic({
                                 name: subtopic.name,
                                 slug: subtopic.slug,
-                                topicId: topicDoc.$id // Usando o ID do tópico recém-criado
+                                topicId: topicDoc.$id // Conflito resolvido: Escolhida a versão do 'main' por ser mais robusta
                             });
                             stats.subtopics++;
                         } catch (error) {
@@ -97,7 +97,7 @@ export const migrateContent = async (): Promise<MigrationResult> => {
     };
 
     try {
-        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
+        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[]; // Conflito resolvido: ambas as versões eram idênticas
 
         for (const topic of topicsToMigrate) {
             try {
