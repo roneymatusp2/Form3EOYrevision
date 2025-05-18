@@ -1,6 +1,6 @@
 # Content Validation Tools for Form3EOYrevision
 
-This directory contains tools to automatically validate and improve the content in the Form3EOYrevision project, using the DeepSeek Reasoner API to intelligently identify and fix issues.
+This directory contains tools to automatically validate and improve the content in the Form3EOYrevision project, using the Mistral API to intelligently identify and fix issues.
 
 ## Overview
 
@@ -27,9 +27,9 @@ These tools help ensure that all educational content is:
 
 ## Dependencies
 
-These tools require:
+-These tools require:
 - Node.js v14 or higher
-- DeepSeek API key (stored in `.env` file)
+- Mistral API key (stored in `.env` file)
 - Additional NPM packages (listed in project's package.json)
 
 ## Directory Structure
@@ -47,9 +47,9 @@ tools/content-validation/
 
 ### Setup
 
-1. Make sure the DeepSeek API key is set in the project's `.env` file:
+1. Make sure the Mistral API key is set in the project's `.env` file:
    ```
-   DEEPSEEK_API_KEY=sk-756f72b30f0c4fa48b01a5f2959bc118
+   MISTRAL_API_KEY=YOUR_MISTRAL_KEY
    ```
 
 2. Install dependencies:
@@ -80,7 +80,7 @@ npm run validate-all
 1. The tool reads the `videos.ts` and `topics.ts` files to understand the project structure
 2. For each video:
    - It checks if the YouTube video is accessible
-   - It uses DeepSeek Reasoner to analyze if the video is relevant to its topic
+   - It uses the Mistral API to analyze if the video is relevant to its topic
    - If issues are found, it finds a replacement video
    - It updates the `videos.ts` file directly with the new URL
 3. All operations are logged and detailed reports are generated
@@ -134,5 +134,5 @@ If you encounter issues:
 
 If you need assistance, please check:
 - The detailed logs in the `logs` directory
-- The DeepSeek API documentation for API-related issues
+- The Mistral API documentation for API-related issues
 - Open an issue in the project repository for bugs or feature requests

@@ -14,10 +14,10 @@ const PDFS_FILE = path.join(DATA_DIR, 'pdfs.ts');
 const LOGS_DIR = path.join(ROOT_DIR, 'logs');
 const BACKUPS_DIR = path.join(LOGS_DIR, 'backups');
 
-// DeepSeek API configuration
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || "sk-756f72b30f0c4fa48b01a5f2959bc118";
-const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
-const DEEPSEEK_MODEL = "deepseek-reasoner";
+// Mistral API configuration
+const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY || "Q2bS1juX7nzap5smevjVSqgkzTW7LBR3";
+const MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions";
+const MISTRAL_MODEL = "mistral-small";
 
 // Rate limiting and performance settings
 const API_DELAY_MS = 3000; // Delay between API calls to avoid rate limiting
@@ -49,9 +49,9 @@ module.exports = {
   LATEX_TEMPLATE_FILE,
   
   // API Configuration
-  DEEPSEEK_API_KEY,
-  DEEPSEEK_API_URL,
-  DEEPSEEK_MODEL,
+  MISTRAL_API_KEY,
+  MISTRAL_API_URL,
+  MISTRAL_MODEL,
   
   // Processing settings
   API_DELAY_MS,
