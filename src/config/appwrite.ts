@@ -1,6 +1,6 @@
 import { Client, Databases, Storage, ID } from 'appwrite';
 
-// Environment validation
+// Static configuration values
 const REQUIRED_ENV_VARS = {
     ENDPOINT: 'https://cloud.appwrite.io/v1',
     PROJECT_ID: '67eff58c0026f452ff3d'
@@ -21,7 +21,7 @@ export const DATABASE_IDS = {
 export const BUCKET_IDS = {
     MATH_PDFS: '67f03c12001381e227aa',    // Storage for PDF files
     MATH_VIDEOS: '67f03c7600242f02fd1a',   // Storage for video content
-    MATH_EXTERNAL: '67f03c7600242f02fd1a'  // Storage for external resources
+    MATH_EXTERNAL: '67f03d6f0021c674bd8d'  // Storage for external resources
 } as const;
 
 // Collection IDs with descriptions

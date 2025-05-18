@@ -1,13 +1,15 @@
 import { AppwriteService } from '../services/appwriteService';
-import topics from '../data/topics';
+import topicsData from '../data/topics';
 
 interface MigrationTopic {
+    $id?: string;
     name: string;
     slug: string;
     subtopics: MigrationSubtopic[];
 }
 
 interface MigrationSubtopic {
+    $id?: string;
     name: string;
     slug: string;
     resources: MigrationResource[];
@@ -39,8 +41,9 @@ export async function migrateTopics(): Promise<MigrationResult> {
     };
 
     try {
+        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
         // Migrate topics and their subtopics
-        for (const topic of topics) {
+        for (const topic of topicsToMigrate) {
             try {
                 // Create topic
                 await AppwriteService.createTopic({
@@ -56,7 +59,7 @@ export async function migrateTopics(): Promise<MigrationResult> {
                             await AppwriteService.createSubtopic({
                                 name: subtopic.name,
                                 slug: subtopic.slug,
-                                topicId: topic.$id
+                                topicId: topic.$id!
                             });
                             stats.subtopics++;
                         } catch (error) {
@@ -94,9 +97,9 @@ export const migrateContent = async (): Promise<MigrationResult> => {
     };
 
     try {
-        const topics: MigrationTopic[] = []; // Replace with your actual data source
+        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
 
-        for (const topic of topics) {
+        for (const topic of topicsToMigrate) {
             try {
                 const topicDoc = await AppwriteService.createTopic({
                     name: topic.name,
