@@ -30,20 +30,21 @@ async function main() {
       log('Proceeding to next step despite errors.');
     }
 
+    // 2. Check PDFs
+    log('\n===== STEP 2: CHECKING PDFs =====');
+    try {
+      log('Running PDF checker...');
+      await execAsync('node tools/content-validation/check-pdfs.js');
+      log('PDF checking completed successfully!');
+    } catch (error) {
+      log(`Error checking PDFs: ${error.message}`, 'ERROR');
+      log('Proceeding to next step despite errors.');
+    }
+
     // Future steps would be added here
     // For example:
-    //
-    // 2. Check PDFs
-    // log('\n===== STEP 2: CHECKING PDFs =====');
-    // try {
-    //   log('Running PDF checker...');
-    //   await execAsync('node tools/content-validation/check-pdfs.js');
-    //   log('PDF checking completed successfully!');
-    // } catch (error) {
-    //   log(`Error checking PDFs: ${error.message}`, 'ERROR');
-    //   log('Proceeding to next step despite errors.');
-    // }
-    //
+    // 3. Generate missing solutions
+    // log('\n===== STEP 3: GENERATING SOLUTIONS =====');
     // 3. Generate missing solutions
     // log('\n===== STEP 3: GENERATING SOLUTIONS =====');
     // try {
