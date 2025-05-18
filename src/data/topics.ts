@@ -31,7 +31,7 @@ const topics: Topic[] = [
             {
                 $id: 'ns-1',
                 name: 'Natural Numbers & Types',
-                slug: 'natural-numbers-types',
+                slug: 'natural-numbers-types', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -53,7 +53,7 @@ const topics: Topic[] = [
             {
                 $id: 'ns-3',
                 name: 'Common Factors & Multiples',
-                slug: 'common-factors-multiples',
+                slug: 'common-factors-multiples', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -64,7 +64,7 @@ const topics: Topic[] = [
             {
                 $id: 'ns-4',
                 name: 'Operations & Brackets',
-                slug: 'operations-brackets',
+                slug: 'operations-brackets', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -74,7 +74,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-5',
-                name: 'Surds, simplification and rationalising the denominator',
+                name: 'Surds',
                 slug: 'surds',
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
@@ -86,7 +86,7 @@ const topics: Topic[] = [
             {
                 $id: 'ns-6',
                 name: 'Decimals, Fractions & Percentages',
-                slug: 'decimals-fractions-percentages',
+                slug: 'decimals-fractions-percentages', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -198,7 +198,7 @@ const topics: Topic[] = [
             {
                 $id: 'mns-3',
                 name: 'Circle Properties',
-                slug: 'circle-properties',
+                slug: 'circle-properties', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -209,7 +209,7 @@ const topics: Topic[] = [
             {
                 $id: 'mns-4',
                 name: 'Composite Shapes Involving Circles',
-                slug: 'composite-circles',
+                slug: 'composite-circles', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -220,7 +220,7 @@ const topics: Topic[] = [
             {
                 $id: 'mns-5',
                 name: 'Scale Drawings and Maps',
-                slug: 'scale-drawings',
+                slug: 'scale-drawings', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -229,9 +229,9 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'mns-6',
+                $id: 'mns-6', // Adicionado de codex
                 name: 'Regular Polygons',
-                slug: 'regular-polygons',
+                slug: 'regular-polygons', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -239,6 +239,7 @@ const topics: Topic[] = [
                 $updatedAt: new Date().toISOString(),
                 $permissions: []
             }
+            // O mns-6 duplicado foi removido.
         ]
     },
     {
@@ -387,7 +388,7 @@ const topics: Topic[] = [
             {
                 $id: 'ang-5',
                 name: 'Bearings Problems (Extended)',
-                slug: 'bearings-problems',
+                slug: 'bearings-problems', // Mantido de codex
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -396,9 +397,9 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-6',
+                $id: 'ang-6', // Adicionado de codex
                 name: 'Transformations',
-                slug: 'transformations',
+                slug: 'transformations', // Adicionado de codex
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -407,7 +408,7 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-7',
+                $id: 'ang-7', // Reindexado de codex (era ang-6 em main)
                 name: 'Reflection',
                 slug: 'reflection',
                 topicId: 'unit-5',
@@ -418,7 +419,7 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-8',
+                $id: 'ang-8', // Reindexado de codex (era ang-7 em main)
                 name: 'Rotation',
                 slug: 'rotation',
                 topicId: 'unit-5',
@@ -429,7 +430,7 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-9',
+                $id: 'ang-9', // Reindexado de codex (era ang-8 em main)
                 name: 'Translation',
                 slug: 'translation',
                 topicId: 'unit-5',
@@ -464,8 +465,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'trig-2',
-                name: 'Angles of Elevation & Depression',
-                slug: 'angles-elevation-depression',
+                name: 'Angles of Elevation & Depression', // Mantido de codex
+                slug: 'angles-elevation-depression', // Coerente com o nome de codex
                 topicId: 'unit-8',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -475,8 +476,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'trig-3',
-                name: 'Periodic Functions',
-                slug: 'periodic-functions',
+                name: 'Periodic Functions', // Mantido de codex (era a segunda definição de trig-3)
+                slug: 'periodic-functions', // Coerente com o nome de codex
                 topicId: 'unit-8',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
