@@ -66,18 +66,18 @@ function createBackup(filePath, log) {
   }
 }
 
-// DeepSeek API call with retry mechanism
-async function callDeepSeekAPI(prompt, systemPrompt, maxRetries = config.MAX_RETRIES, log) {
+// Mistral API call with retry mechanism
+async function callMistralAPI(prompt, systemPrompt, maxRetries = config.MAX_RETRIES, log) {
   let retries = 0;
   
   while (retries <= maxRetries) {
     try {
-      log(`Calling DeepSeek API (attempt ${retries + 1}/${maxRetries + 1})...`);
+      log(`Calling Mistral API (attempt ${retries + 1}/${maxRetries + 1})...`);
       
       const response = await axios.post(
-        config.DEEPSEEK_API_URL,
+        config.MISTRAL_API_URL,
         {
-          model: config.DEEPSEEK_MODEL,
+          model: config.MISTRAL_MODEL,
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: prompt }
@@ -88,7 +88,7 @@ async function callDeepSeekAPI(prompt, systemPrompt, maxRetries = config.MAX_RET
         {
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${config.DEEPSEEK_API_KEY}`
+            "Authorization": `Bearer ${config.MISTRAL_API_KEY}`
           }
         }
       );
@@ -108,7 +108,7 @@ async function callDeepSeekAPI(prompt, systemPrompt, maxRetries = config.MAX_RET
         log(`Retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       } else {
-        throw new Error(`Failed to call DeepSeek API after ${maxRetries + 1} attempts`);
+        throw new Error(`Failed to call Mistral API after ${maxRetries + 1} attempts`);
       }
     }
   }
@@ -194,7 +194,7 @@ module.exports = {
   ensureDirectoriesExist,
   initLogging,
   createBackup,
-  callDeepSeekAPI,
+  callMistralAPI,
   extractYouTubeVideoId,
   isYouTubeVideoAccessible,
   parseTypeScriptFile,

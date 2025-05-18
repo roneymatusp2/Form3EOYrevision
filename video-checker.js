@@ -5,8 +5,8 @@ const path = require('path');
 const axios = require('axios');
 
 // Configuration
-const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY || "sk-756f72b30f0c4fa48b01a5f2959bc118";
-const DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions";
+const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY || "sk-756f72b30f0c4fa48b01a5f2959bc118";
+const MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions";
 
 // Define path to video data file
 const VIDEOS_FILE_PATH = path.join(__dirname, 'src/data/videos.ts');
@@ -27,15 +27,15 @@ const log = (message) => {
   fs.appendFileSync(LOG_FILE, logMessage);
 };
 
-// Helper function to call DeepSeek Reasoner API
-async function callDeepSeekReasoner(prompt) {
+// Helper function to call Mistral API
+async function callMistralAPI(prompt) {
   try {
-    log("Calling DeepSeek API...");
+    log("Calling Mistral API...");
     
     const response = await axios.post(
-      DEEPSEEK_API_URL,
+      MISTRAL_API_URL,
       {
-        model: "deepseek-reasoner",
+        model: "mistral-large",
         messages: [
           { role: "system", content: "You are a mathematics education expert specializing in Cambridge IGCSE Mathematics." },
           { role: "user", content: prompt }
@@ -46,14 +46,14 @@ async function callDeepSeekReasoner(prompt) {
       {
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${DEEPSEEK_API_KEY}`
+          "Authorization": `Bearer ${MISTRAL_API_KEY}`
         }
       }
     );
     
     return response.data.choices[0].message.content;
   } catch (error) {
-    log(`DeepSeek API error: ${error.message}`);
+    log(`Mistral API error: ${error.message}`);
     if (error.response) {
       log(`Response data: ${JSON.stringify(error.response.data)}`);
     }
@@ -76,7 +76,7 @@ async function verifyYouTubeVideo(videoUrl, topicName, subtopicName) {
     
     try {
       await axios.get(videoInfoUrl);
-      // Video exists, now verify content relevance with DeepSeek
+      // Video exists, now verify content relevance with Mistral
     } catch (error) {
       log(`Video not accessible: ${videoUrl}`);
       return { 
@@ -86,7 +86,7 @@ async function verifyYouTubeVideo(videoUrl, topicName, subtopicName) {
       };
     }
     
-    // Use DeepSeek to verify the content relevance
+    // Use Mistral to verify the content relevance
     const prompt = `
     I need to verify if a YouTube video is relevant to a specific mathematics topic.
 
@@ -108,7 +108,7 @@ async function verifyYouTubeVideo(videoUrl, topicName, subtopicName) {
     If the video is not accessible or not relevant to the topic, please suggest a better YouTube video that specifically addresses this mathematics topic/subtopic.
     `;
     
-    const response = await callDeepSeekReasoner(prompt);
+    const response = await callMistralAPI(prompt);
     let result;
     
     try {
@@ -164,7 +164,7 @@ async function findReplacementVideo(topicName, subtopicName) {
   `;
   
   try {
-    const response = await callDeepSeekReasoner(prompt);
+    const response = await callMistralAPI(prompt);
     const videoUrlMatch = response.match(/(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\S+/);
     let url = videoUrlMatch ? videoUrlMatch[0].trim() : null;
     

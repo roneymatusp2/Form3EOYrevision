@@ -1,29 +1,29 @@
-const DEEPSEEK_API_KEY = process.env.REACT_APP_DEEPSEEK_API_KEY;
-const DEEPSEEK_API_URL = 'https://api.deepseek.com/v1';
+const MISTRAL_API_KEY = process.env.REACT_APP_MISTRAL_API_KEY;
+const MISTRAL_API_URL = 'https://api.mistral.ai/v1';
 
-export const deepseekService = {
+export const mistralService = {
     async generateResponse(prompt: string) {
         try {
-            const response = await fetch(`${DEEPSEEK_API_URL}/chat/completions`, {
+            const response = await fetch(`${MISTRAL_API_URL}/chat/completions`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+                    'Authorization': `Bearer ${MISTRAL_API_KEY}`
                 },
                 body: JSON.stringify({
-                    model: 'deepseek-chat',
+                    model: 'mistral-large',
                     messages: [{ role: 'user', content: prompt }]
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`DeepSeek API error: ${response.statusText}`);
+                throw new Error(`Mistral API error: ${response.statusText}`);
             }
 
             const data = await response.json();
             return data.choices[0].message.content;
         } catch (error) {
-            console.error('Error calling DeepSeek API:', error);
+            console.error('Error calling Mistral API:', error);
             throw error;
         }
     }

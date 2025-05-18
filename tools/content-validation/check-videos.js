@@ -4,7 +4,7 @@ const path = require('path');
 const config = require('./config');
 const utils = require('./utils');
 
-// System prompt for DeepSeek API
+// System prompt for Mistral API
 const SYSTEM_PROMPT = `You are a mathematics education expert specializing in Cambridge IGCSE Mathematics. 
 Your task is to analyze and verify educational videos, ensuring they are appropriate, accurate, and relevant 
 for students studying specific mathematical topics.`;
@@ -214,7 +214,7 @@ async function verifyVideoRelevance(videoUrl, topicName, subtopicName, log) {
   `;
   
   try {
-    const response = await utils.callDeepSeekAPI(prompt, SYSTEM_PROMPT, config.MAX_RETRIES, log);
+    const response = await utils.callMistralAPI(prompt, SYSTEM_PROMPT, config.MAX_RETRIES, log);
     let result;
     
     try {
@@ -279,7 +279,7 @@ async function findReplacementVideo(topicName, subtopicName, log) {
   `;
   
   try {
-    const response = await utils.callDeepSeekAPI(prompt, SYSTEM_PROMPT, config.MAX_RETRIES, log);
+    const response = await utils.callMistralAPI(prompt, SYSTEM_PROMPT, config.MAX_RETRIES, log);
     const videoUrlMatch = response.match(/(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\S+/);
     let url = videoUrlMatch ? videoUrlMatch[0].trim() : null;
     

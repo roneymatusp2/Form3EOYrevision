@@ -4,7 +4,7 @@ This tool automatically checks all videos in the Form3EOYrevision project, verif
 
 ## Overview
 
-The tool uses the DeepSeek Reasoner API to:
+The tool uses the Mistral API to:
 
 1. Go through all videos in each topic and subtopic
 2. Check if each video is accessible (not deleted or private)
@@ -19,7 +19,7 @@ The tool uses the DeepSeek Reasoner API to:
 
 ## Setup
 
-1. The `.env` file has already been set up with the DeepSeek Reasoner API key.
+1. The `.env` file has already been set up with the Mistral API key.
 
 2. Install the required dependencies:
 
@@ -74,4 +74,4 @@ If you encounter any issues:
 
 ## Important Note
 
-The DeepSeek Reasoner API has rate limits. If you get rate limit errors, increase the delay between API calls or run the tool in smaller batches.
+The Mistral API has rate limits. If you get rate limit errors, increase the delay between API calls or run the tool in smaller batches.
