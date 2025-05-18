@@ -1,156 +1,51 @@
-#!/usr/bin/env node
+name: Resource Validation
 
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const dotenv = require('dotenv');
-const pLimit = require('p-limit');
-const chalk = require('chalk');
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'src/data/**.ts'
+      - 'scripts/resource-checker.js'
+      - '.github/workflows/resource-validation.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  schedule:
+    - cron: '0 4 * * 0'
 
-dotenv.config();
+jobs:
+  validate_resource_links:
+    name: Validate Resource Links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
 
-const DATA_DIR = path.resolve('src', 'data');
-const FILES_TO_SCAN = ['videos.ts', 'pdfs.ts', 'externalResources.ts'];
-const URL_REGEX = /https?:\/\/[^\s'"\)]+/g;
-const MAX_CONCURRENT_CHECKS = 10;
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-const MISTRAL_API_KEY = process.env.MISTRAL_API_KEY || '';
-const MISTRAL_API_URL = 'https://api.mistral.ai/v1/chat/completions';
-const MISTRAL_MODEL = 'mistral-small';
-const MISTRAL_PROMPT_TEMPLATE = (url) => `Verify that the following resource link is relevant to a mathematics topic and safe for students: ${url}`;
-const MISTRAL_REQUEST_TIMEOUT = 20000;
-const URL_CHECK_TIMEOUT = 15000;
-const MAX_REDIRECTS = 5;
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: 'npm'
 
-async function queryMistralAI(url) {
-  if (!MISTRAL_API_KEY) return { text: '', error: false, skipped: true };
-  try {
-    const payload = {
-      model: MISTRAL_MODEL,
-      messages: [{ role: 'user', content: MISTRAL_PROMPT_TEMPLATE(url) }],
-      temperature: 0.1,
-    };
-    const response = await axios.post(MISTRAL_API_URL, payload, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${MISTRAL_API_KEY}`,
-      },
-      timeout: MISTRAL_REQUEST_TIMEOUT,
-    });
-    return { text: response.data.choices?.[0]?.message?.content?.trim() || '', error: false, skipped: false };
-  } catch (error) {
-    const errorMessage = error.response?.status ? `status ${error.response.status}` : error.message;
-    return { text: `Mistral API error: ${errorMessage}`, error: true, skipped: false };
-  }
-}
+      - name: Install dependencies
+        run: npm ci
 
-async function isUrlAccessible(url) {
-  const makeRequest = async (method) => {
-    const config = {
-      timeout: URL_CHECK_TIMEOUT,
-      maxRedirects: MAX_REDIRECTS,
-      validateStatus: (status) => status >= 200 && status < 400,
-    };
-    if (method === 'get') {
-      config.headers = { Range: 'bytes=0-0' };
-    }
-    return axios[method](url, config);
-  };
+      - name: Run resource link checker
+        id: check_links
+        run: npm run check-resources
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          NODE_ENV: production
+          FORCE_COLOR: '1'
 
-  try {
-    await makeRequest('head');
-    return true;
-  } catch (headError) {
-    try {
-      await makeRequest('get');
-      return true;
-    } catch (getError) {
-      return false;
-    }
-  }
-}
-
-(async () => {
-  const concurrencyLimiter = pLimit(MAX_CONCURRENT_CHECKS);
-  const brokenLinksReport = [];
-  const processedUrls = new Set();
-  let totalUrlsExtracted = 0;
-  let uniqueUrlsToCheckCount = 0;
-
-  console.log(chalk.blue('🚀 Starting resource validation...'));
-
-  for (const fileName of FILES_TO_SCAN) {
-    const filePath = path.join(DATA_DIR, fileName);
-    if (!fs.existsSync(filePath)) {
-      console.warn(chalk.yellow(`⚠️ File not found, skipping: ${filePath}`));
-      continue;
-    }
-
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const extractedUrlsInFile = (fileContent.match(URL_REGEX) || [])
-      .map(url => url.replace(/[',"\)]+$/, '').replace(/\.$/, '')); // Improved cleaning
-
-    totalUrlsExtracted += extractedUrlsInFile.length;
-
-    const newUniqueUrls = extractedUrlsInFile.filter(url => {
-      if (processedUrls.has(url)) return false;
-      processedUrls.add(url);
-      return true;
-    });
-
-    uniqueUrlsToCheckCount += newUniqueUrls.length;
-
-    if (newUniqueUrls.length > 0) {
-        console.log(chalk.cyan(`🔍 Found ${newUniqueUrls.length} new unique URLs in ${fileName}.`));
-    }
-
-
-    const checkTasks = newUniqueUrls.map(url =>
-      concurrencyLimiter(async () => {
-        const progressPrefix = `[${processedUrls.size - (uniqueUrlsToCheckCount - checkTasks.indexOf(url)) +1 }/${processedUrls.size}]`;
-        process.stdout.write(chalk.gray(`\r${progressPrefix} Checking: ${url.substring(0, 60)}...` + ' '.repeat(10)));
-
-        const isAlive = await isUrlAccessible(url);
-        process.stdout.write('\r' + ' '.repeat(process.stdout.columns || 80) + '\r');
-
-        if (!isAlive) {
-          brokenLinksReport.push(`${fileName}: ${url}`);
-          console.log(chalk.red('✗ Broken:'), chalk.underline(url), chalk.gray(`(from ${fileName})`));
-          return;
-        }
-
-        const mistralResult = await queryMistralAI(url);
-        let mistralOutput = '';
-        if (mistralResult.skipped) {
-          mistralOutput = chalk.yellow('(Mistral AI skipped)');
-        } else if (mistralResult.error) {
-          mistralOutput = chalk.magenta(`(Mistral: ${mistralResult.text})`);
-        } else if (mistralResult.text) {
-          mistralOutput = chalk.cyan(`(Mistral: ${mistralResult.text.substring(0,80)}${mistralResult.text.length > 80 ? '...' : ''})`);
-        }
-        console.log(chalk.green('✓ Alive: '), chalk.underline(url), mistralOutput);
-      })
-    );
-    await Promise.all(checkTasks);
-  }
-
-  process.stdout.write('\r' + ' '.repeat(process.stdout.columns || 80) + '\r');
-  console.log(chalk.blue(`\n🏁 Validation finished. Total URLs extracted: ${totalUrlsExtracted}. Unique URLs checked: ${processedUrls.size}.`));
-
-  const reportPath = 'broken-links.txt';
-  if (brokenLinksReport.length > 0) {
-    fs.writeFileSync(reportPath, brokenLinksReport.join('\n'));
-    console.error(chalk.red.bold(`\n❌ Found ${brokenLinksReport.length} broken link(s). Report generated: ${reportPath}`));
-    process.exit(1);
-  } else {
-    console.log(chalk.green.bold('\n✅ All checked links are healthy!'));
-    if (fs.existsSync(reportPath)) {
-        fs.unlinkSync(reportPath);
-    }
-    process.exit(0);
-  }
-})().catch(error => {
-    console.error(chalk.red.bold('\n💥 An unexpected error occurred during the script execution:'));
-    console.error(error);
-    process.exit(2);
-});
+      - name: Upload broken links report
+        if: failure() || steps.check_links.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: broken-links-report
+          path: broken-links.txt
+          if-no-files-found: ignore
