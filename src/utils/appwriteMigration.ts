@@ -1,7 +1,6 @@
 import { AppwriteService } from '../services/appwriteService';
-import topicsData from '../data/topics'; // Esta linha era idêntica em ambas as versões do conflito
+import topicsData from '../data/topics';
 
-// As interfaces eram idênticas em ambas as versões do conflito
 interface MigrationTopic {
     $id?: string;
     name: string;
@@ -44,8 +43,7 @@ export async function migrateTopics(): Promise<MigrationResult> {
     try {
         const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
         // Migrate topics and their subtopics
-        // Resolução do conflito: Usando a lógica do branch 'main' que é mais robusta
-        for (const topic of topicsToMigrate) { // topicsToMigrate é o mesmo que topicsData aqui
+        for (const topic of topicsToMigrate) {
             try {
                 // Create topic and capture its ID for the subtopics
                 const topicDoc = await AppwriteService.createTopic({
@@ -99,9 +97,6 @@ export const migrateContent = async (): Promise<MigrationResult> => {
     };
 
     try {
-        // Resolução do conflito: Ambas as versões eram funcionalmente idênticas aqui.
-        // Mantendo a versão do 'main' com o comentário.
-        // Use the topics imported from the data directory
         const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
 
         for (const topic of topicsToMigrate) {
