@@ -1,13 +1,15 @@
 import { AppwriteService } from '../services/appwriteService';
-import topics from '../data/topics';
+import topicsData from '../data/topics';
 
 interface MigrationTopic {
+    $id?: string;
     name: string;
     slug: string;
     subtopics: MigrationSubtopic[];
 }
 
 interface MigrationSubtopic {
+    $id?: string;
     name: string;
     slug: string;
     resources: MigrationResource[];
@@ -40,10 +42,10 @@ export async function migrateTopics(): Promise<MigrationResult> {
 
     try {
         // Migrate topics and their subtopics
-        for (const topic of topics) {
+        for (const topic of topicsData as unknown as MigrationTopic[]) {
             try {
-                // Create topic
-                await AppwriteService.createTopic({
+                // Create topic and capture its ID for the subtopics
+                const topicDoc = await AppwriteService.createTopic({
                     name: topic.name,
                     slug: topic.slug
                 });
@@ -56,7 +58,7 @@ export async function migrateTopics(): Promise<MigrationResult> {
                             await AppwriteService.createSubtopic({
                                 name: subtopic.name,
                                 slug: subtopic.slug,
-                                topicId: topic.$id
+                                topicId: topicDoc.$id
                             });
                             stats.subtopics++;
                         } catch (error) {
@@ -94,9 +96,10 @@ export const migrateContent = async (): Promise<MigrationResult> => {
     };
 
     try {
-        const topics: MigrationTopic[] = []; // Replace with your actual data source
+        // Use the topics imported from the data directory
+        const topicsToMigrate: MigrationTopic[] = topicsData as unknown as MigrationTopic[];
 
-        for (const topic of topics) {
+        for (const topic of topicsToMigrate) {
             try {
                 const topicDoc = await AppwriteService.createTopic({
                     name: topic.name,
