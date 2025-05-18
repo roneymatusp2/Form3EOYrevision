@@ -48,7 +48,7 @@ const config: AppwriteConfig = {
     endpoint: REQUIRED_ENV_VARS.ENDPOINT,
     projectId: REQUIRED_ENV_VARS.PROJECT_ID,
     databaseId: DATABASE_IDS.MATH_REVISION,
-    bucketId: BUCKET_IDS.MATH_PDFS,
+    bucketId: BUCKET_IDS.MATH_PDFS, // Usando MATH_PDFS como padrão, mas pode ser alterado conforme necessário
     topicsCollectionId: COLLECTION_IDS.TOPICS,
     subtopicsCollectionId: COLLECTION_IDS.SUBTOPICS,
     resourcesCollectionId: COLLECTION_IDS.RESOURCES
@@ -65,10 +65,13 @@ export const storage = new Storage(client);
 
 // Helper functions
 export const getFilePreviewUrl = (fileId: string): string => {
+    // Assumindo que você quer usar o bucketId configurado em 'config'
+    // Se você precisar de um bucketId dinâmico, esta função precisará ser ajustada
     return storage.getFilePreview(config.bucketId, fileId).toString();
 };
 
 export const getFileViewUrl = (fileId: string): string => {
+    // Mesma suposição acima para bucketId
     return storage.getFileView(config.bucketId, fileId).toString();
 };
 
@@ -76,4 +79,4 @@ export const generateUniqueId = (): string => {
     return ID.unique();
 };
 
-export default config; 
+export default config;

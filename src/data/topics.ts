@@ -20,7 +20,7 @@ export interface Subtopic extends Models.Document {
 const topics: Topic[] = [
     {
         $id: 'unit-1',
-        name: 'Unit 1: Number Systems, Different Representations and Use of Numbers',
+        name: 'Unit 1: Number Systems',
         slug: 'number-systems',
         $collectionId: 'topics',
         $databaseId: 'database',
@@ -30,8 +30,8 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'ns-1',
-                name: 'Natural numbers, integers, primes, squares, cubes, triangles, rational/irrational numbers, real numbers, reciprocals',
-                slug: 'natural-numbers',
+                name: 'Natural Numbers & Types',
+                slug: 'natural-numbers-types', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -41,7 +41,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-2',
-                name: 'Standard Form and four operations with it',
+                name: 'Standard Form',
                 slug: 'standard-form',
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
@@ -52,8 +52,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-3',
-                name: 'Common factors, common multiples, prime factors, HCF, LCM',
-                slug: 'common-factors',
+                name: 'Common Factors & Multiples',
+                slug: 'common-factors-multiples', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -63,8 +63,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-4',
-                name: 'Operations, brackets, powers, roots, fractions (proper/improper/mixed)',
-                slug: 'four-operations',
+                name: 'Operations & Brackets',
+                slug: 'operations-brackets', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -74,7 +74,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-5',
-                name: 'Surds, simplification and rationalising the denominator',
+                name: 'Surds',
                 slug: 'surds',
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
@@ -85,8 +85,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-6',
-                name: 'Equivalences between decimals, fractions and percentages',
-                slug: 'decimals-fractions',
+                name: 'Decimals, Fractions & Percentages',
+                slug: 'decimals-fractions-percentages', // Mantido de codex
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -96,8 +96,19 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ns-7',
-                name: 'Ratio and Proportion',
-                slug: 'ratio-proportion',
+                name: 'Set Theory and Venn Diagrams',
+                slug: 'set-theory-venn',
+                topicId: 'unit-1',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'ns-8',
+                name: 'Probability and Statistics',
+                slug: 'probability-statistics',
                 topicId: 'unit-1',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -119,7 +130,7 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'am-1',
-                name: 'Rules for exponents/indices (including negative and fractional powers)',
+                name: 'Rules for Exponents & Indices',
                 slug: 'exponents-indices',
                 topicId: 'unit-2',
                 $collectionId: 'subtopics',
@@ -130,7 +141,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'am-2',
-                name: 'Expansion of brackets (including square of binomial)',
+                name: 'Expansion of Brackets',
                 slug: 'expansion-brackets',
                 topicId: 'unit-2',
                 $collectionId: 'subtopics',
@@ -141,7 +152,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'am-3',
-                name: 'Factorisation: common factor, grouping, difference of squares, trinomials',
+                name: 'Factorisation Techniques',
                 slug: 'factorisation',
                 topicId: 'unit-2',
                 $collectionId: 'subtopics',
@@ -164,7 +175,7 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'mns-1',
-                name: 'Units: mm, cm, m, km, mm², cm², m², km², mm³, cm³, m³, ml, g, kg',
+                name: 'Units of Measurement',
                 slug: 'units-measurement',
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
@@ -175,7 +186,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'mns-2',
-                name: 'Perimeter and area of rectangle, triangle, parallelogram, trapezium, compound shapes',
+                name: 'Perimeter & Area',
                 slug: 'perimeter-area',
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
@@ -186,8 +197,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'mns-3',
-                name: 'Circle vocabulary and terminology',
-                slug: 'circle-vocabulary',
+                name: 'Circle Properties',
+                slug: 'circle-properties', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -197,8 +208,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'mns-4',
-                name: 'Circumference and area of a circle',
-                slug: 'circle-calculations',
+                name: 'Composite Shapes Involving Circles',
+                slug: 'composite-circles', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -208,8 +219,19 @@ const topics: Topic[] = [
             },
             {
                 $id: 'mns-5',
-                name: 'Arc length and area of sector',
-                slug: 'arc-sector',
+                name: 'Scale Drawings and Maps',
+                slug: 'scale-drawings', // Mantido de codex
+                topicId: 'unit-3',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'mns-6', // Adicionado de codex
+                name: 'Regular Polygons',
+                slug: 'regular-polygons', // Mantido de codex
                 topicId: 'unit-3',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -217,6 +239,7 @@ const topics: Topic[] = [
                 $updatedAt: new Date().toISOString(),
                 $permissions: []
             }
+            // O mns-6 duplicado foi removido.
         ]
     },
     {
@@ -231,7 +254,7 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'lpm-1',
-                name: 'Solution of linear equations (including those with fractional expressions)',
+                name: 'Linear Equations',
                 slug: 'linear-equations',
                 topicId: 'unit-4',
                 $collectionId: 'subtopics',
@@ -242,8 +265,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'lpm-2',
-                name: 'Writing, showing and interpretation of inequalities (including number line)',
-                slug: 'inequalities-interpretation',
+                name: 'Inequalities',
+                slug: 'inequalities',
                 topicId: 'unit-4',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -253,18 +276,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'lpm-3',
-                name: 'Solution of linear inequalities',
-                slug: 'inequalities-solution',
-                topicId: 'unit-4',
-                $collectionId: 'subtopics',
-                $databaseId: 'database',
-                $createdAt: new Date().toISOString(),
-                $updatedAt: new Date().toISOString(),
-                $permissions: []
-            },
-            {
-                $id: 'lpm-4',
-                name: 'Linear functions (y = mx + c, ax + by = d): writing, graphing, function notation',
+                name: 'Linear Functions',
                 slug: 'linear-functions',
                 topicId: 'unit-4',
                 $collectionId: 'subtopics',
@@ -274,9 +286,42 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'lpm-5',
-                name: 'Simultaneous equations',
+                $id: 'lpm-4',
+                name: 'Simultaneous Equations',
                 slug: 'simultaneous-equations',
+                topicId: 'unit-4',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'lpm-5',
+                name: 'Coordinate Geometry',
+                slug: 'coordinate-geometry',
+                topicId: 'unit-4',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'lpm-6',
+                name: 'Distance Formula',
+                slug: 'distance-formula',
+                topicId: 'unit-4',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'lpm-7',
+                name: 'Midpoint Formula',
+                slug: 'midpoint-formula',
                 topicId: 'unit-4',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -298,7 +343,7 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'ang-1',
-                name: 'Geometric terms: point, vertex, line, plane, parallel, perpendicular, angles, interior, exterior',
+                name: 'Geometric Terms',
                 slug: 'geometric-terms',
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
@@ -309,18 +354,7 @@ const topics: Topic[] = [
             },
             {
                 $id: 'ang-2',
-                name: 'Shape vocabulary (triangles, quadrilaterals, polygons, solid figures)',
-                slug: 'shape-vocabulary',
-                topicId: 'unit-5',
-                $collectionId: 'subtopics',
-                $databaseId: 'database',
-                $createdAt: new Date().toISOString(),
-                $updatedAt: new Date().toISOString(),
-                $permissions: []
-            },
-            {
-                $id: 'ang-3',
-                name: 'Measuring angles and three-figure bearings',
+                name: 'Measuring Angles',
                 slug: 'measuring-angles',
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
@@ -330,8 +364,8 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-4',
-                name: 'Angle relationships (on straight lines, at points, parallel lines)',
+                $id: 'ang-3',
+                name: 'Angle Relationships',
                 slug: 'angle-relationships',
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
@@ -341,9 +375,9 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-5',
-                name: 'Polygon angles (sum of angles, interior/exterior angles)',
-                slug: 'polygon-angles',
+                $id: 'ang-4',
+                name: 'Pythagoras Theorem',
+                slug: 'pythagoras-theorem',
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -352,9 +386,53 @@ const topics: Topic[] = [
                 $permissions: []
             },
             {
-                $id: 'ang-6',
-                name: 'Pythagoras\' Theorem and applications',
-                slug: 'pythagoras-theorem',
+                $id: 'ang-5',
+                name: 'Bearings Problems (Extended)',
+                slug: 'bearings-problems', // Mantido de codex
+                topicId: 'unit-5',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'ang-6', // Adicionado de codex
+                name: 'Transformations',
+                slug: 'transformations', // Adicionado de codex
+                topicId: 'unit-5',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'ang-7', // Reindexado de codex (era ang-6 em main)
+                name: 'Reflection',
+                slug: 'reflection',
+                topicId: 'unit-5',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'ang-8', // Reindexado de codex (era ang-7 em main)
+                name: 'Rotation',
+                slug: 'rotation',
+                topicId: 'unit-5',
+                $collectionId: 'subtopics',
+                $databaseId: 'database',
+                $createdAt: new Date().toISOString(),
+                $updatedAt: new Date().toISOString(),
+                $permissions: []
+            },
+            {
+                $id: 'ang-9', // Reindexado de codex (era ang-8 em main)
+                name: 'Translation',
+                slug: 'translation',
                 topicId: 'unit-5',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -366,7 +444,7 @@ const topics: Topic[] = [
     },
     {
         $id: 'unit-8',
-        name: 'Unit 8: Trigonometry of Triangles and Periodic Functions',
+        name: 'Unit 8: Trigonometry',
         slug: 'trigonometry',
         $collectionId: 'topics',
         $databaseId: 'database',
@@ -376,7 +454,7 @@ const topics: Topic[] = [
         subtopics: [
             {
                 $id: 'trig-1',
-                name: 'Right-angled triangle trigonometry (SOHCAHTOA)',
+                name: 'Right-Angled Trigonometry',
                 slug: 'right-angled-trigonometry',
                 topicId: 'unit-8',
                 $collectionId: 'subtopics',
@@ -387,8 +465,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'trig-2',
-                name: 'Solving problems using Pythagoras\' theorem and trigonometry',
-                slug: 'pythagoras-trigonometry',
+                name: 'Angles of Elevation & Depression', // Mantido de codex
+                slug: 'angles-elevation-depression', // Coerente com o nome de codex
                 topicId: 'unit-8',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
@@ -398,19 +476,8 @@ const topics: Topic[] = [
             },
             {
                 $id: 'trig-3',
-                name: 'Angles of elevation and depression',
-                slug: 'angles-elevation-depression',
-                topicId: 'unit-8',
-                $collectionId: 'subtopics',
-                $databaseId: 'database',
-                $createdAt: new Date().toISOString(),
-                $updatedAt: new Date().toISOString(),
-                $permissions: []
-            },
-            {
-                $id: 'trig-4',
-                name: 'Perpendicular distance from a point to a line',
-                slug: 'perpendicular-distance',
+                name: 'Periodic Functions', // Mantido de codex (era a segunda definição de trig-3)
+                slug: 'periodic-functions', // Coerente com o nome de codex
                 topicId: 'unit-8',
                 $collectionId: 'subtopics',
                 $databaseId: 'database',
