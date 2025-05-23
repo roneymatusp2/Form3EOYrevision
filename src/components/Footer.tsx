@@ -156,8 +156,8 @@ const Footer: React.FC = () => {
               <Link to="/resources" className="hover:text-indigo-300 transition-colors">Study Materials</Link>
               <a href="https://www.corbettmaths.com/" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-300 transition-colors">Corbett Maths</a>
               <a href="https://www.mathsgenie.co.uk/" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-300 transition-colors">Maths Genie</a>
-              <a href="https://wkhhcetm.manus.space/" target="_blank" rel="noopener noreferrer" className="text-indigo-300/30 hover:text-indigo-300/50 transition-colors">Extra</a>
-              <a href="https://qkvtywkg.manus.space/" target="_blank" rel="noopener noreferrer" className="text-indigo-300/30 hover:text-indigo-300/50 transition-colors">Extra 2</a>
+              <a href="https://wkhhcetm.manus.space/" target="_blank" rel="noopener noreferrer" className="text-indigo-300/30 hover:text-indigo-300/50 transition-colors"></a>
+              <a href="https://qkvtywkg.manus.space/" target="_blank" rel="noopener noreferrer" className="text-indigo-300/30 hover:text-indigo-300/50 transition-colors"> 2</a>
             </div>
           </div>
         </div>
